@@ -92,6 +92,18 @@ class TaskBoard extends Component {
     fetchListTask()
   }
 
+  renderSearchBox = () => {
+    let xhtml = null;
+    // const { open } = this.state;
+    xhtml = (
+      <div>
+        search box here!
+      </div>
+    )
+
+    return xhtml;
+  }
+
 
   render() {
     return (
@@ -102,6 +114,7 @@ class TaskBoard extends Component {
         <Button variant='contained' color='secondary' onClick={this.openForm}>
           <AddIcon />
         </Button>
+        {this.renderSearchBox()}
         {this.renderBoard()}
         {this.renderForm()}
       </>

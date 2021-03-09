@@ -8,6 +8,7 @@ import Grid from '@material-ui/core/Grid'
 
 import TaskList from '../../components/TaskList'
 import TaskForm from '../../components/TaskForm'
+import SearchBox from '../../components/SearchBox'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -40,11 +41,11 @@ class TaskBoard extends Component {
     open: false
   }
 
-  // componentDidMount() {
-  //   const { taskActionCreators } = this.props
-  //   const { fetchListTask } = taskActionCreators
-  //   fetchListTask()
-  // }
+  componentDidMount() {
+    const { taskActionCreators } = this.props
+    const { fetchListTask } = taskActionCreators
+    fetchListTask()
+  }
 
   renderBoard() {
     console.log(this.props)
@@ -92,12 +93,19 @@ class TaskBoard extends Component {
     fetchListTask()
   }
 
+  handleFilter = (e) => {
+    const { value } = e.target
+    const { taskActionCreators } = this.props
+    const { filterTask } = taskActionCreators
+    filterTask(value)
+  }
+
   renderSearchBox = () => {
     let xhtml = null;
     // const { open } = this.state;
     xhtml = (
       <div>
-        search box here!
+        <SearchBox handleChange={this.handleFilter} />
       </div>
     )
 

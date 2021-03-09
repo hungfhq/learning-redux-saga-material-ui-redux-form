@@ -12,15 +12,25 @@ const reducer = (state = initialSate, action) => {
         listTask: []
       }
     case taskConstants.FETCH_TASK_SUCCESS:
-      const { data } = action.payload
-      return {
-        ...state,
-        listTask: data
+      {
+        const { data } = action.payload
+        return {
+          ...state,
+          listTask: data
+        }
       }
     case taskConstants.FETCH_TASK_FAILED:
       return {
         ...state,
         listTask: []
+      }
+    case taskConstants.FILTER_TASK_SUCCESS:
+      {
+        const { data } = action.payload
+        return {
+          ...state,
+          listTask: data
+        }
       }
     default:
       return state;

@@ -13,7 +13,6 @@ import styles from './styles'
 
 class TaskItem extends Component {
   render() {
-    console.log(this.props)
     const { task, status, classes } = this.props
     return (
       <Card key={task.id} className={classes.card}>

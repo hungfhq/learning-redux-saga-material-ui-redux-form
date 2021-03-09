@@ -9,33 +9,46 @@ import Grid from '@material-ui/core/Grid'
 import TaskList from '../../components/TaskList'
 import TaskForm from '../../components/TaskForm'
 
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import * as taskActions from '../../actions/task'
+import PropTypes from 'prop-types';
 
-const listTask = [
-  {
-    id: 1,
-    title: "read book",
-    description: 'read material ui book',
-    status: 0
-  },
-  {
-    id: 2,
-    title: "play football",
-    description: 'with my friend',
-    status: 2
-  },
-  {
-    id: 3,
-    title: "play game",
-    description: 'play station',
-    status: 1
-  },
-]
+// const listTask = [
+//   {
+//     id: 1,
+//     title: "read book",
+//     description: 'read material ui book',
+//     status: 0
+//   },
+//   {
+//     id: 2,
+//     title: "play football",
+//     description: 'with my friend',
+//     status: 2
+//   },
+//   {
+//     id: 3,
+//     title: "play game",
+//     description: 'play station',
+//     status: 1
+//   },
+// ]
 
-class Taskboard extends Component {
+class TaskBoard extends Component {
   state = {
     open: false
   }
+
+  // componentDidMount() {
+  //   const { taskActionCreators } = this.props
+  //   const { fetchListTask } = taskActionCreators
+  //   fetchListTask()
+  // }
+
   renderBoard() {
+    console.log(this.props)
+    const { listTask } = this.props
     let xhtml = null;
     xhtml = (<Grid container spacing={2}>
       {
@@ -73,10 +86,19 @@ class Taskboard extends Component {
     return xhtml;
   }
 
+  loadData = () => {
+    const { taskActionCreators } = this.props
+    const { fetchListTask } = taskActionCreators
+    fetchListTask()
+  }
+
 
   render() {
     return (
       <>
+        <Button variant='contained' color='primary' onClick={this.loadData}>
+          Load Data
+        </Button>
         <Button variant='contained' color='secondary' onClick={this.openForm}>
           <AddIcon />
         </Button>
@@ -87,4 +109,23 @@ class Taskboard extends Component {
   }
 }
 
-export default withStyles(styles)(Taskboard);
+TaskBoard.propTypes = {
+  classes: PropTypes.object,
+  taskActionCreators: PropTypes.shape({
+    fetchListTask: PropTypes.func,
+  }),
+  listTask: PropTypes.array
+}
+
+const mapStateToProps = state => {
+  return {
+    listTask: state.task.listTask
+  }
+}
+const mapDispatchToProps = dispatch => {
+  return {
+    taskActionCreators: bindActionCreators(taskActions, dispatch)
+  }
+}
+
+export default withStyles(styles)(connect(mapStateToProps, mapDispatchToProps)(TaskBoard));

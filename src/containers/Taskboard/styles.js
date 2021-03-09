@@ -1,5 +1,5 @@
 const styles = (theme) => ({
-  taskBoard: {
+  TaskBoard: {
     width: "90vw",
     display: "flex",
     alignItems: "center",

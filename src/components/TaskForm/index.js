@@ -24,7 +24,6 @@ class TaskForm extends Component {
             fullWidth
           />
           <TextField
-            autoFocus
             margin="dense"
             id="description"
             label="Description"

@@ -9,7 +9,6 @@ import styles from './styles'
 
 class TaskList extends Component {
   render() {
-    console.log(this.props)
     const { classes, tasks, status, key } = this.props
     return (
       <Grid item md={4} sm={4} xs={12} key={key}>

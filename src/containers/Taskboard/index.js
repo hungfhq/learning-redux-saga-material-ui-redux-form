@@ -7,34 +7,16 @@ import { STATUSES } from '../../constants/index';
 import Grid from '@material-ui/core/Grid'
 
 import TaskList from '../../components/TaskList'
-import TaskForm from '../../components/TaskForm'
+import AppModal from '../../components/AppModal'
 import SearchBox from '../../components/SearchBox'
+import TaskForm from '../../components/TaskForm'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import * as taskActions from '../../actions/task'
+import * as modalActions from '../../actions/modal'
 import PropTypes from 'prop-types';
 
-// const listTask = [
-//   {
-//     id: 1,
-//     title: "read book",
-//     description: 'read material ui book',
-//     status: 0
-//   },
-//   {
-//     id: 2,
-//     title: "play football",
-//     description: 'with my friend',
-//     status: 2
-//   },
-//   {
-//     id: 3,
-//     title: "play game",
-//     description: 'play station',
-//     status: 1
-//   },
-// ]
 
 class TaskBoard extends Component {
   state = {
@@ -65,27 +47,29 @@ class TaskBoard extends Component {
     return xhtml;
   }
 
-  handleClose = () => {
-    this.setState({
-      open: false
-    })
-  }
+  // handleClose = () => {
+  //   this.setState({
+  //     open: false
+  //   })
+  // }
 
   openForm = () => {
-    this.setState({
-      open: true
-    })
+    const { modalActionCreators } = this.props
+    const { showModal, changeModalTitle, changeModalContent } = modalActionCreators
+    showModal()
+    changeModalTitle('add title')
+    changeModalContent(<TaskForm />)
   }
 
-  renderForm() {
-    let xhtml = null;
-    const { open } = this.state;
-    xhtml = (
-      <TaskForm open={open} handleClose={this.handleClose} />
-    )
+  // renderForm() {
+  //   let xhtml = null;
+  //   const { open } = this.state;
+  //   xhtml = (
+  //     <AppModal open={open} handleClose={this.handleClose} />
+  //   )
 
-    return xhtml;
-  }
+  //   return xhtml;
+  // }
 
   loadData = () => {
     const { taskActionCreators } = this.props
@@ -124,7 +108,7 @@ class TaskBoard extends Component {
         </Button>
         {this.renderSearchBox()}
         {this.renderBoard()}
-        {this.renderForm()}
+        {/* {this.renderForm()} */}
       </>
     );
   }
@@ -134,6 +118,12 @@ TaskBoard.propTypes = {
   classes: PropTypes.object,
   taskActionCreators: PropTypes.shape({
     fetchListTask: PropTypes.func,
+  }),
+  modalActionCreators: PropTypes.shape({
+    showModal: PropTypes.func,
+    hideModal: PropTypes.func,
+    changeModalTitle: PropTypes.func,
+    changeModalContent: PropTypes.func,
   }),
   listTask: PropTypes.array
 }
@@ -145,7 +135,8 @@ const mapStateToProps = state => {
 }
 const mapDispatchToProps = dispatch => {
   return {
-    taskActionCreators: bindActionCreators(taskActions, dispatch)
+    taskActionCreators: bindActionCreators(taskActions, dispatch),
+    modalActionCreators: bindActionCreators(modalActions, dispatch)
   }
 }
 

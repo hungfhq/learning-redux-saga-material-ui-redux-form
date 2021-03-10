@@ -21,9 +21,9 @@ class TaskItem extends Component {
             <Grid item md={8} sm={8} xs={12}>
               <Typography component='h2'>{task.title}</Typography>
             </Grid>
-            <Grid item md={4} sm={4} xs={12}>
+            {/* <Grid item md={4} sm={4} xs={12}>
               {status.label}
-            </Grid>
+            </Grid> */}
           </Grid>
           <p>{task.description}</p>
         </CardContent>

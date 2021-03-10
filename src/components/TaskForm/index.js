@@ -1,47 +1,70 @@
 import React, { Component } from 'react'
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
+import Grid from '@material-ui/core/Grid';
+import Box from '@material-ui/core/Box';
+import { withStyles } from '@material-ui/core'
+import styles from './styles'
+import PropTypes from 'prop-types'
+import { bindActionCreators, compose } from 'redux'
+import { connect } from 'react-redux'
 
 class TaskForm extends Component {
   render() {
-    const { open, handleClose } = this.props
+    const { classes } = this.props
     return (
-      <Dialog open={open} onClose={this.handleClose} aria-labelledby="form-dialog-title">
-        <DialogTitle id="form-dialog-title">Add New Task</DialogTitle>
-        <DialogContent>
-          <DialogContentText> Enter name of new task </DialogContentText>
-          <TextField
-            autoFocus
-            margin="dense"
-            id="name"
-            label="Task"
-            type="text"
-            fullWidth
-          />
-          <TextField
-            margin="dense"
-            id="description"
-            label="Description"
-            type="text"
-            fullWidth
-          />
-        </DialogContent>
-        <DialogActions>
-          <Button onClick={handleClose} color="primary">
-            Cancel
-              </Button>
-          <Button onClick={handleClose} color="primary">
-            Add
-              </Button>
-        </DialogActions>
-      </Dialog>
+      <form>
+        <Grid container spacing={2}>
+          <Grid item lg={12} md={12} sm={12} xs={12}>
+            <TextField
+              autoFocus
+              margin="dense"
+              id="name"
+              label="Title"
+              type="text"
+              fullWidth
+            />
+          </Grid>
+          <Grid item lg={12} md={12} sm={12} xs={12}>
+            <TextField
+              margin="dense"
+              id="description"
+              label="Description"
+              type="text"
+              fullWidth
+            />
+          </Grid>
+          <Grid item lg={12} md={12} sm={12} xs={12}>
+            <Box display='flex' flexDirection='row-reverse' justifyContent='space-around'>
+              <Button variant='contained' color='primary'>Save</Button>
+              <Button variant='contained' color='secondary'>Cancel</Button>
+            </Box>
+          </Grid>
+        </Grid>
+      </form>
     )
   }
 }
 
-export default TaskForm
+TaskForm.propTypes = {
+  classes: PropTypes.object,
+  open: PropTypes.bool,
+}
+
+// const mapStateToProps = state => {
+//   return {
+//     open: state.modal.showModal,
+//     component: state.modal.component,
+//     title: state.modal.title,
+//   }
+// }
+// const mapDispatchToProps = dispatch => {
+//   return {
+//     modalActionCreators: bindActionCreators(modalActions, dispatch)
+//   }
+// }
+
+// const withConnect = connect(mapStateToProps, mapDispatchToProps)
+
+export default withStyles(styles)(TaskForm)
+

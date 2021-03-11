@@ -20,7 +20,9 @@ const styles = theme => ({
     color: theme.color.secondary
   },
   content: {},
-  icon: {}
+  icon: {
+    cursor: 'pointer'
+  }
 })
 
 export default styles

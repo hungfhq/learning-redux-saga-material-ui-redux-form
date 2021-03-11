@@ -9,7 +9,7 @@ import Grid from '@material-ui/core/Grid'
 import TaskList from '../../components/TaskList'
 import AppModal from '../../components/AppModal'
 import SearchBox from '../../components/SearchBox'
-import TaskForm from '../../components/TaskForm'
+import TaskForm from '../TaskForm'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -30,7 +30,6 @@ class TaskBoard extends Component {
   }
 
   renderBoard() {
-    console.log(this.props)
     const { listTask } = this.props
     let xhtml = null;
     xhtml = (<Grid container spacing={2}>
@@ -60,16 +59,6 @@ class TaskBoard extends Component {
     changeModalTitle('add title')
     changeModalContent(<TaskForm />)
   }
-
-  // renderForm() {
-  //   let xhtml = null;
-  //   const { open } = this.state;
-  //   xhtml = (
-  //     <AppModal open={open} handleClose={this.handleClose} />
-  //   )
-
-  //   return xhtml;
-  // }
 
   loadData = () => {
     const { taskActionCreators } = this.props
@@ -108,7 +97,6 @@ class TaskBoard extends Component {
         </Button>
         {this.renderSearchBox()}
         {this.renderBoard()}
-        {/* {this.renderForm()} */}
       </>
     );
   }

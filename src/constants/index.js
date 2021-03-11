@@ -11,3 +11,7 @@ export const STATUS_CODE = {
   CREATED: 201,
   UPDATED: 202,
 }
+
+export const TIMER = {
+  loadingTime: 1000
+}

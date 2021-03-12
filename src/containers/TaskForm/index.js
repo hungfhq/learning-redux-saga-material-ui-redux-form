@@ -39,7 +39,8 @@ class TaskForm extends Component {
   }
 
   render() {
-    const { classes, modalActionCreators, handleSubmit, submitting, invalid } = this.props
+    const { classes, modalActionCreators, handleSubmit, submitting, invalid, taskEditing } = this.props
+    console.log(`taskEditing`, taskEditing)
     const { hideModal } = modalActionCreators
     return (
       <form onSubmit={handleSubmit(this.handleSubmitForm)}>
@@ -105,10 +106,19 @@ TaskForm.propTypes = {
   }),
   handleSubmit: PropTypes.func,
   submitting: PropTypes.bool,
-  invalid: PropTypes.bool
+  invalid: PropTypes.bool,
+  taskEditing: PropTypes.object
 }
 
-const mapStateToProps = null
+const mapStateToProps = state => {
+  return {
+    taskEditing: state.task.taskEditing,
+    initialValues: {
+      title: state.task.taskEditing ? state.task.taskEditing.title : '',
+      description: state.task.taskEditing ? state.task.taskEditing.description : '',
+    },
+  }
+}
 const mapDispatchToProps = dispatch => {
   return {
     modalActionCreators: bindActionCreators(modalActions, dispatch),

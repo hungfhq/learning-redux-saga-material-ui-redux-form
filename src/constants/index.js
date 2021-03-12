@@ -13,5 +13,6 @@ export const STATUS_CODE = {
 }
 
 export const TIMER = {
-  loadingTime: 1000
+  loadingTime: 1000,
+  delayTime: 500
 }

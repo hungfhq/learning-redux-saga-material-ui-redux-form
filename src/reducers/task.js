@@ -2,7 +2,8 @@ import * as taskConstants from '../constants/task'
 import { toastError } from '../helpers/toastHelper'
 
 const initialSate = {
-  listTask: []
+  listTask: [],
+  taskEditing: null
 }
 
 const reducer = (state = initialSate, action) => {
@@ -51,6 +52,14 @@ const reducer = (state = initialSate, action) => {
         toastError(error)
         return {
           ...state
+        }
+      }
+    case taskConstants.SET_TASK_EDITING:
+      {
+        const { task } = action.payload
+        return {
+          ...state,
+          taskEditing: task
         }
       }
     default:

@@ -6,10 +6,11 @@ import Box from '@material-ui/core/Box'
 
 import { withStyles } from '@material-ui/core'
 import styles from './styles'
+import PropTypes from 'prop-types'
 
 class TaskList extends Component {
   render() {
-    const { classes, tasks, status, key } = this.props
+    const { classes, tasks, status, key, editTask } = this.props
     return (
       <Grid item md={4} sm={4} xs={12} key={key}>
         <div className={classes.status}>
@@ -21,7 +22,13 @@ class TaskList extends Component {
           {
             tasks.map((task) => {
               return (
-                <TaskItem key={task.id} task={task} status={status} classes={classes} />
+                <TaskItem
+                  key={task.id}
+                  task={task}
+                  status={status}
+                  classes={classes}
+                  editTask={() => editTask(task)}
+                />
               )
             })
           }
@@ -29,6 +36,14 @@ class TaskList extends Component {
       </Grid>
     )
   }
+}
+
+TaskList.propTypes = {
+  classes: PropTypes.object,
+  tasks: PropTypes.array,
+  status: PropTypes.object,
+  key: PropTypes.number,
+  editTask: PropTypes.func
 }
 
 export default withStyles(styles)(TaskList)

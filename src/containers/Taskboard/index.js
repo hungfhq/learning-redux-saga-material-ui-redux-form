@@ -37,7 +37,12 @@ class TaskBoard extends Component {
         STATUSES.map((status) => {
           const taskFiltered = listTask.filter(task => task.status === status.value)
           return (
-            <TaskList key={status.value} tasks={taskFiltered} status={status} />
+            <TaskList
+              key={status.value}
+              tasks={taskFiltered}
+              status={status}
+              editTask={this.handleEditTask}
+            />
           )
         })
       }
@@ -46,17 +51,13 @@ class TaskBoard extends Component {
     return xhtml;
   }
 
-  // handleClose = () => {
-  //   this.setState({
-  //     open: false
-  //   })
-  // }
-
   openForm = () => {
-    const { modalActionCreators } = this.props
+    const { modalActionCreators, taskActionCreators } = this.props
+    const { setTaskEditing } = taskActionCreators
+    setTaskEditing(null)
     const { showModal, changeModalTitle, changeModalContent } = modalActionCreators
     showModal()
-    changeModalTitle('add title')
+    changeModalTitle('add new task')
     changeModalContent(<TaskForm />)
   }
 
@@ -71,6 +72,16 @@ class TaskBoard extends Component {
     const { taskActionCreators } = this.props
     const { filterTask } = taskActionCreators
     filterTask(value)
+  }
+
+  handleEditTask = task => {
+    const { modalActionCreators, taskActionCreators } = this.props
+    const { setTaskEditing } = taskActionCreators
+    setTaskEditing(task)
+    const { showModal, changeModalTitle, changeModalContent } = modalActionCreators
+    showModal()
+    changeModalTitle('edit task')
+    changeModalContent(<TaskForm />)
   }
 
   renderSearchBox = () => {
@@ -106,6 +117,8 @@ TaskBoard.propTypes = {
   classes: PropTypes.object,
   taskActionCreators: PropTypes.shape({
     fetchListTask: PropTypes.func,
+    filterTask: PropTypes.func,
+    setTaskEditing: PropTypes.func,
   }),
   modalActionCreators: PropTypes.shape({
     showModal: PropTypes.func,
@@ -118,7 +131,8 @@ TaskBoard.propTypes = {
 
 const mapStateToProps = state => {
   return {
-    listTask: state.task.listTask
+    listTask: state.task.listTask,
+    taskEditing: state.task.taskEditing,
   }
 }
 const mapDispatchToProps = dispatch => {

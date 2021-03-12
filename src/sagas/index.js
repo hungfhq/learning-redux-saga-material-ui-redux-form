@@ -5,21 +5,21 @@ import { STATUSES, STATUS_CODE, TIMER } from '../constants'
 import {
   fetchListTaskSuccess,
   fetchListTaskFailed,
+  fetchListTask,
   filterTaskSuccess,
   addTaskSuccess,
   addTaskFailed
 } from '../actions/task'
 import { showLoading, hideLoading } from '../actions/ui'
 import { hideModal } from '../actions/modal'
-import { clone } from 'lodash'
 
 
 function* watchFetchListTaskAction() {
   while (true) {
-    yield take(taskTypes.FETCH_TASK)
+    const action = yield take(taskTypes.FETCH_TASK)
     yield put(showLoading())
-    // from here, code will be blocked
-    const resp = yield call(getList)
+    const { params } = action.payload
+    const resp = yield call(getList, params)
     const { status, data } = resp
     if (status === STATUS_CODE.SUCCESS) {
       // dispatch action fetchListTaskSuccess
@@ -35,14 +35,12 @@ function* watchFetchListTaskAction() {
 
 
 function* filterTaskSaga({ payload }) {
-  yield delay(500)
+  yield delay(TIMER.delayTime)
   const { keyword } = payload
-  const list = yield select(state => state.task.listTask)
-  let filteredList = clone(list)
-  if (keyword.trim() !== '') {
-    filteredList = list.filter(item => item.title.toLowerCase().includes(keyword.trim().toLowerCase()))
-  }
-  yield put(filterTaskSuccess(filteredList))
+  const q = keyword
+  yield put(
+    fetchListTask({ q })
+  )
 }
 
 function* addTaskSaga({ payload }) {
@@ -60,6 +58,14 @@ function* addTaskSaga({ payload }) {
   }
   yield delay(TIMER.loadingTime)
   yield put(hideModal())
+  yield put(hideLoading())
+}
+
+function* editTaskSaga({ payload }) {
+  const { title, description } = payload
+  yield put(showLoading())
+  console.log(payload)
+  yield delay(TIMER.loadingTime)
   yield put(hideLoading())
 }
 

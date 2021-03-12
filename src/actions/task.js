@@ -1,9 +1,13 @@
 import * as taskApis from '../apis/task'
 import * as taskConstants from '../constants/task'
 
-export const fetchListTask = () => {
+export const fetchListTask = (params = {}) => {
+  console.log(`params`, params)
   return {
-    type: taskConstants.FETCH_TASK
+    type: taskConstants.FETCH_TASK,
+    payload: {
+      params
+    }
   }
 }
 
@@ -52,25 +56,14 @@ export const addTaskFailed = error => {
   }
 }
 
-// B1: fetchListTaskRequest()
-// B1: Reset: state tasks => []
-// B3: fetchListTaskSuccess (data response)
-
-// export const fetchListTaskRequest = () => {
-//   return dispatch => {
-//     dispatch(fetchListTask())
-//     taskApis
-//       .getList()
-//       .then(resp => {
-//         const { data } = resp
-//         dispatch(fetchListTaskSuccess(data))
-//       })
-//       .catch(error => {
-//         dispatch(fetchListTaskFailed(error))
-//       })
-//   }
-// }
-
+export const setTaskEditing = task => {
+  return {
+    type: taskConstants.SET_TASK_EDITING,
+    payload: {
+      task
+    }
+  }
+}
 
 export const filterTask = keyword => {
   return {

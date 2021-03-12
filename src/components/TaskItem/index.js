@@ -9,11 +9,12 @@ import Icon from '@material-ui/core/Icon'
 
 import { withStyles } from '@material-ui/core'
 import styles from './styles'
+import PropTypes from 'prop-types'
 
 
 class TaskItem extends Component {
   render() {
-    const { task, status, classes } = this.props
+    const { task, status, classes, editTask } = this.props
     return (
       <Card key={task.id} className={classes.card}>
         <CardContent>
@@ -28,7 +29,7 @@ class TaskItem extends Component {
           <p>{task.description}</p>
         </CardContent>
         <CardActions className={classes.cardActions}>
-          <Fab color="primary" size='small'>
+          <Fab color="primary" size='small' onClick={editTask}>
             <Icon fontSize='small'>
               edit_icon
             </Icon>
@@ -42,6 +43,13 @@ class TaskItem extends Component {
       </Card>
     )
   }
+}
+
+TaskItem.propTypes = {
+  classes: PropTypes.object,
+  task: PropTypes.object,
+  status: PropTypes.object,
+  editTask: PropTypes.func
 }
 
 export default withStyles(styles)(TaskItem)

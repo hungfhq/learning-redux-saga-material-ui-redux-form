@@ -7,9 +7,9 @@ import { STATUSES } from '../../constants/index';
 import Grid from '@material-ui/core/Grid'
 
 import TaskList from '../../components/TaskList'
-import AppModal from '../../components/AppModal'
 import SearchBox from '../../components/SearchBox'
 import TaskForm from '../TaskForm'
+import ConfirmBox from '../ConfirmBox'
 
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
@@ -42,6 +42,7 @@ class TaskBoard extends Component {
               tasks={taskFiltered}
               status={status}
               editTask={this.handleEditTask}
+              removeTask={this.handleRemoveTask}
             />
           )
         })
@@ -82,6 +83,16 @@ class TaskBoard extends Component {
     showModal()
     changeModalTitle('edit task')
     changeModalContent(<TaskForm />)
+  }
+
+  handleRemoveTask = task => {
+    const { modalActionCreators, taskActionCreators } = this.props
+    const { setTaskEditing } = taskActionCreators
+    setTaskEditing(task)
+    const { showModal, changeModalTitle, changeModalContent } = modalActionCreators
+    showModal()
+    changeModalTitle('remove task')
+    changeModalContent(<ConfirmBox />)
   }
 
   renderSearchBox = () => {

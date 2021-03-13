@@ -62,6 +62,14 @@ const reducer = (state = initialSate, action) => {
           taskEditing: task
         }
       }
+    case taskConstants.REMOVE_TASK:
+      {
+        const { task } = action.payload
+        return {
+          ...state,
+          taskEditing: task
+        }
+      }
     default:
       return state;
   }

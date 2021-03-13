@@ -61,18 +61,18 @@ function* addTaskSaga({ payload }) {
   yield put(hideLoading())
 }
 
-function* editTaskSaga({ payload }) {
+function* removeTaskSaga({ payload }) {
   const { title, description } = payload
-  yield put(showLoading())
-  console.log(payload)
-  yield delay(TIMER.loadingTime)
-  yield put(hideLoading())
+  console.log(`removeTask`, payload)
 }
+
+
 
 function* rootSaga() {
   yield fork(watchFetchListTaskAction) //non-blocking
   yield takeLatest(taskTypes.FILTER_TASK, filterTaskSaga)
   yield takeEvery(taskTypes.ADD_TASK, addTaskSaga)
+  yield takeEvery(taskTypes.REMOVE_TASK, removeTaskSaga)
 }
 
 export default rootSaga

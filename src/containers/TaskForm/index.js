@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
 import Grid from '@material-ui/core/Grid';
 import Box from '@material-ui/core/Box';
 import { withStyles } from '@material-ui/core'
@@ -40,7 +39,6 @@ class TaskForm extends Component {
 
   render() {
     const { classes, modalActionCreators, handleSubmit, submitting, invalid, taskEditing } = this.props
-    console.log(`taskEditing`, taskEditing)
     const { hideModal } = modalActionCreators
     return (
       <form onSubmit={handleSubmit(this.handleSubmitForm)}>

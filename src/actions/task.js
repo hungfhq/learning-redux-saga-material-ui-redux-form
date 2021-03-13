@@ -38,6 +38,15 @@ export const addTask = (title, description) => {
   }
 }
 
+// export const removeTask = (title, description) => {
+//   return {
+//     type: taskConstants.ADD_TASK,
+//     payload: {
+//       title, description
+//     }
+//   }
+// }
+
 export const addTaskSuccess = data => {
   return {
     type: taskConstants.ADD_TASK_SUCCESS,
@@ -57,8 +66,18 @@ export const addTaskFailed = error => {
 }
 
 export const setTaskEditing = task => {
+  console.log(`task editing`, task)
   return {
     type: taskConstants.SET_TASK_EDITING,
+    payload: {
+      task
+    }
+  }
+}
+
+export const removeTask = task => {
+  return {
+    type: taskConstants.REMOVE_TASK,
     payload: {
       task
     }

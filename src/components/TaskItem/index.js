@@ -14,7 +14,7 @@ import PropTypes from 'prop-types'
 
 class TaskItem extends Component {
   render() {
-    const { task, status, classes, editTask } = this.props
+    const { task, status, classes, editTask, removeTask } = this.props
     return (
       <Card key={task.id} className={classes.card}>
         <CardContent>
@@ -34,7 +34,7 @@ class TaskItem extends Component {
               edit_icon
             </Icon>
           </Fab>
-          <Fab color="secondary" size='small'>
+          <Fab color="secondary" size='small' onClick={removeTask}>
             <Icon fontSize='small'>
               delete_icon
             </Icon>
@@ -49,7 +49,8 @@ TaskItem.propTypes = {
   classes: PropTypes.object,
   task: PropTypes.object,
   status: PropTypes.object,
-  editTask: PropTypes.func
+  editTask: PropTypes.func,
+  removeTask: PropTypes.func,
 }
 
 export default withStyles(styles)(TaskItem)
